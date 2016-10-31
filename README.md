@@ -15,7 +15,7 @@ from cf_role R,cf_user U,cf_userrole U_R
 where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1'))
 ) and PrivilegeOperation='Permit' and P.PrivilegeAccess='Sys_Menu';
 </pre>
-<img src="">
+<img src="https://github.com/duanrunsen/rbac/blob/master/111.png">
 ##查询用户test1可以对订单(order)页面中的操作权限(sys_button):
     伪代码：
     1.根据user中用户text1的userID，找出userrole中该用户的roleID。
@@ -32,4 +32,4 @@ from cf_role R,cf_user U,cf_userrole U_R
 where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1'))
 ) and  M.MenuName='订单' and B.MenuNo=M.MenuNo  and PrivilegeOperation='Permit';
 </pre>
-<img src="">
+<img src="https://github.com/duanrunsen/rbac/blob/master/222.png">
