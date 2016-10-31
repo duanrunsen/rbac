@@ -21,16 +21,15 @@ where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1'))
     1.根据user中用户text1的userID，找出userrole中该用户的roleID。
     2.将cf_privilege与sys_menu左连接。
     3.在cf_privilege中遍历，P.PrivilegeAccess='Sys_Button' 、PrivilegeOperation='Permit' 、M.MenuName='订单' 、sys_Menu.MenuNo=sys_Menu.MenuNo且if PrivilegeMaster字段，如果是CF_User,则判断PrivilegeMasterKey是否等于在第一步中查找的UserID,如果是，并入查询结果集；如果PrivilegeMaster字段是CF_Role,则判断PrivilegeMasterKey是否等于在第二步中查找的RoleID,如果是，并入查询结果集。
-    查询代码：
-    select B.BtnName,B.BtnID
+<pre>查询代码：
+select B.BtnName,B.BtnID
 from cf_privilege P left join sys_button B on P.PrivilegeAccessKey=B.BtnID and P.PrivilegeAccess='Sys_Button',sys_menu M
-where (
-( P.PrivilegeMaster='CF_User' AND P.PrivilegeMasterKey=(select U.UserID from cf_user U where U.LoginName='test1') ) 
-or (P.PrivilegeMaster='CF_Role' and P.PrivilegeMasterKey =
-(select U_R.RoleID
+where ((
+P.PrivilegeMaster='CF_User' AND P.PrivilegeMasterKey=(select U.UserID from cf_user U where U.LoginName='test1') ) 
+or (P.PrivilegeMaster='CF_Role' and P.PrivilegeMasterKey =(
+select U_R.RoleID
 from cf_role R,cf_user U,cf_userrole U_R 
-where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1')
-)
+where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1'))
 ) and  M.MenuName='订单' and B.MenuNo=M.MenuNo  and PrivilegeOperation='Permit';
-
+</pre>
 <img src="">
